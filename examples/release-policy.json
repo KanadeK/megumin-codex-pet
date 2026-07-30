@@ -1,0 +1,8 @@
+{
+  "fail_on_contract_warning": true,
+  "max_alpha_area_delta_ratio": 0.02,
+  "max_centroid_shift_px": 1.0,
+  "max_motion_metric_delta_ratio": 0.03,
+  "max_rgba_mean_delta": 0.02,
+  "max_silhouette_mean_delta": 0.02
+}

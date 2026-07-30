@@ -1,0 +1,36 @@
+{
+  "baseline": {
+    "atlas_sha256": "example-baseline-sha256",
+    "id": "example-pet"
+  },
+  "current": {
+    "atlas_sha256": "example-current-sha256",
+    "id": "example-pet"
+  },
+  "findings": [
+    {
+      "cell": "r00c00",
+      "code": "cell-budget-exceeded",
+      "detail": {
+        "centroid_shift_px": {
+          "actual": 18.25,
+          "maximum": 14.0
+        }
+      },
+      "message": "idle:0 exceeded one or more PetDiff budgets",
+      "severity": "error"
+    }
+  ],
+  "ok": false,
+  "schema": 1,
+  "summary": {
+    "cells_checked": 73,
+    "errors": 1,
+    "manifest_changes": 0,
+    "warnings": 0
+  },
+  "tool": {
+    "name": "petdiff",
+    "version": "0.1.0"
+  }
+}

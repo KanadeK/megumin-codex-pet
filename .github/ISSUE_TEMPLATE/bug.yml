@@ -1,0 +1,33 @@
+name: Bug report
+description: Report a reproducible PetDiff or lifecycle defect.
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Include the command, exit code, and machine-readable finding.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Minimal reproduction
+      render: shell
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: PetDiff version
+      placeholder: petdiff 0.1.0
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Python, and Pillow versions.
+    validations:
+      required: true

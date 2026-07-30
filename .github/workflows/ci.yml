@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ["3.11", "3.12"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e ".[dev]"
+      - run: ruff check .
+      - run: mypy src
+      - run: pytest --cov=megumin_pet --cov-report=term-missing
+      - run: python -m build
+
+  pet-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - id: pet
+        name: Detect packaged pet
+        shell: bash
+        run: |
+          if [[ -f pet/spritesheet.webp && -f pet/pet.lock.json ]]; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "available=false" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/setup-python@v5
+        if: steps.pet.outputs.available == 'true'
+        with:
+          python-version: "3.11"
+          cache: pip
+      - if: steps.pet.outputs.available == 'true'
+        run: python -m pip install -e .
+      - name: Validate locked pet
+        if: steps.pet.outputs.available == 'true'
+        run: |
+          petdiff validate pet --json-out build/validation.json
+          petdiff check-lock pet pet/pet.lock.json \
+            --policy examples/release-policy.json \
+            --json-out build/petdiff.json \
+            --html-out build/petdiff.html
+      - uses: actions/upload-artifact@v4
+        if: steps.pet.outputs.available == 'true'
+        with:
+          name: pet-contract-evidence
+          path: build/

@@ -1,0 +1,58 @@
+name: PetDiff Codex pet review
+description: Validate and regression-review a Codex v2 pet atlas.
+author: KanadeK
+branding:
+  color: red
+  icon: eye
+inputs:
+  baseline:
+    description: Base-branch pet.lock.json path.
+    required: true
+  current:
+    description: Current unpacked pet directory.
+    required: true
+  policy:
+    description: PetDiff policy JSON.
+    required: false
+    default: examples/review-policy.json
+  report-prefix:
+    description: Output path without extension.
+    required: false
+    default: build/petdiff
+outputs:
+  json-report:
+    description: Machine-readable report path.
+    value: ${{ steps.review.outputs['json-report'] }}
+  html-report:
+    description: Self-contained HTML report path.
+    value: ${{ steps.review.outputs['html-report'] }}
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+        cache: pip
+    - name: Install PetDiff
+      shell: bash
+      run: python -m pip install "${{ github.action_path }}"
+    - id: review
+      name: Review atlas regression
+      shell: bash
+      env:
+        PETDIFF_BASELINE: ${{ inputs.baseline }}
+        PETDIFF_CURRENT: ${{ inputs.current }}
+        PETDIFF_POLICY: ${{ inputs.policy }}
+        PETDIFF_PREFIX: ${{ inputs['report-prefix'] }}
+        PETDIFF_ACTION_PATH: ${{ github.action_path }}
+      run: |
+        if [[ ! -f "$PETDIFF_POLICY" ]]; then
+          PETDIFF_POLICY="$PETDIFF_ACTION_PATH/$PETDIFF_POLICY"
+        fi
+        mkdir -p "$(dirname "$PETDIFF_PREFIX")"
+        petdiff compare "$PETDIFF_BASELINE" "$PETDIFF_CURRENT" \
+          --policy "$PETDIFF_POLICY" \
+          --json-out "$PETDIFF_PREFIX.json" \
+          --html-out "$PETDIFF_PREFIX.html"
+        echo "json-report=$PETDIFF_PREFIX.json" >> "$GITHUB_OUTPUT"
+        echo "html-report=$PETDIFF_PREFIX.html" >> "$GITHUB_OUTPUT"
