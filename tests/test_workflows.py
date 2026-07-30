@@ -46,5 +46,5 @@ def test_release_workflow_runs_strict_gate_before_publishing() -> None:
     steps = workflow["jobs"]["release"]["steps"]
     commands = "\n".join(str(step.get("run", "")) for step in steps)
     assert "scripts/release_check.py --strict --json" in commands
-    release_steps = [step for step in steps if step.get("uses") == "softprops/action-gh-release@v2"]
+    release_steps = [step for step in steps if step.get("uses") == "softprops/action-gh-release@v3"]
     assert len(release_steps) == 1
