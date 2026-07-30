@@ -15,6 +15,5 @@ artwork/hatch-run/imagegen-jobs.json
 artwork/hatch-run/pet_request.json
 artwork/hatch-run/decoded/
 artwork/hatch-run/final/
-artwork/hatch-run/qa/*.gif
-artwork/hatch-run/qa/*.webp
-artwork/hatch-run/qa/*.mp4
+artwork/hatch-run/frames/
+artwork/hatch-run/qa/

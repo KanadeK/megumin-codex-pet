@@ -18,6 +18,8 @@ from .contract import (
     CELL_WIDTH,
     COLUMNS,
     LOOK_ANGLES,
+    OPTIONAL_CELL_KEYS,
+    RESERVED_CELL_KEYS,
     ROWS,
     SNAPSHOT_SCHEMA,
     STATE_LAYOUT,
@@ -80,12 +82,14 @@ def _cell_metrics(cell: Image.Image, row: int, column: int) -> dict[str, Any]:
             for offset in range(CELL_WIDTH - 1, len(alpha_values), CELL_WIDTH)
         )
     )
+    key = cell_key(row, column)
     return {
-        "key": cell_key(row, column),
+        "key": key,
         "label": cell_label(row, column),
         "row": row,
         "column": column,
-        "required": cell_key(row, column) in ACTIVE_CELL_KEYS,
+        "required": key in ACTIVE_CELL_KEYS,
+        "optional": key in OPTIONAL_CELL_KEYS,
         "visible_pixels": visible_pixels,
         "opaque_pixels": opaque_pixels,
         "alpha_area": round(alpha_sum / 255.0, 4),
@@ -140,7 +144,10 @@ def _validation_for_cells(cells: dict[str, dict[str, Any]]) -> list[dict[str, An
     findings: list[dict[str, Any]] = []
     for key in sorted(cells):
         metrics = cells[key]
-        if bool(metrics["required"]) and int(metrics["visible_pixels"]) == 0:
+        required = bool(metrics["required"])
+        optional = bool(metrics["optional"])
+        visible_pixels = int(metrics["visible_pixels"])
+        if required and visible_pixels == 0:
             findings.append(
                 finding(
                     "error",
@@ -149,7 +156,7 @@ def _validation_for_cells(cells: dict[str, dict[str, Any]]) -> list[dict[str, An
                     cell=key,
                 )
             )
-        if not bool(metrics["required"]) and int(metrics["visible_pixels"]) != 0:
+        if not required and not optional and visible_pixels != 0:
             findings.append(
                 finding(
                     "error",
@@ -159,7 +166,7 @@ def _validation_for_cells(cells: dict[str, dict[str, Any]]) -> list[dict[str, An
                     detail={"visible_pixels": metrics["visible_pixels"]},
                 )
             )
-        if bool(metrics["required"]) and int(metrics["edge_alpha"]) != 0:
+        if (required or optional) and visible_pixels != 0 and int(metrics["edge_alpha"]) != 0:
             findings.append(
                 finding(
                     "error",
@@ -217,6 +224,8 @@ def inspect_pet(pet_dir: Path) -> dict[str, Any]:
             "grid": [COLUMNS, ROWS],
             "cell": [CELL_WIDTH, CELL_HEIGHT],
             "required_cells": len(ACTIVE_CELL_KEYS),
+            "optional_cells": len(OPTIONAL_CELL_KEYS),
+            "reserved_cells": len(RESERVED_CELL_KEYS),
         },
         "manifest": manifest,
         "atlas": None,

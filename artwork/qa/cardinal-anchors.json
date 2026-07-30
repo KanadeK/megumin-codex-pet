@@ -1,0 +1,45 @@
+{
+  "ok": true,
+  "source_strip": "decoded/look-cardinals.png",
+  "source_strip_sha256": "37a12b3120d32a6284203718dd799f161f9fbdf04e625f7f3a00836c8969a055",
+  "deterministic_extraction": {
+    "report": "qa/cardinal-anchors.json",
+    "ok": true,
+    "errors": []
+  },
+  "semantic_remap": {
+    "reason": "The generator interpreted character-relative left/right. The two unambiguous profile anchors were assigned by their visible screen direction.",
+    "raw_000_to": "000",
+    "raw_090_to": "270",
+    "raw_180_to": "180",
+    "raw_270_to": "090"
+  },
+  "anchors": [
+    {
+      "direction": "000",
+      "semantic_verdict": "pass",
+      "observed": "frontal eyes and chin point toward the top edge",
+      "sha256": "ddbd738e6d2a3836de7d5036334b7489ef80dccfc7b783ab73c54b28fc8f76b2"
+    },
+    {
+      "direction": "090",
+      "semantic_verdict": "pass",
+      "observed": "profile, nose, and eyes point toward screen-right",
+      "sha256": "13648f9006cae9936646f95cce14799aa24b070dcc932485c9235a1007a2aef8"
+    },
+    {
+      "direction": "180",
+      "semantic_verdict": "pass",
+      "observed": "frontal eyes and chin point toward the bottom edge",
+      "sha256": "bf8949d8bbe28ae4080e13721696c0437b785a0f567fdbecfae9f92d63a1aaa1"
+    },
+    {
+      "direction": "270",
+      "semantic_verdict": "pass",
+      "observed": "profile, nose, and eyes point toward screen-left",
+      "sha256": "fdf9117e2d0b12675868d11ce7b25156abd7093de4585a66daceecd7f4140d6e"
+    }
+  ],
+  "approved_strip": "decoded/look-anchors-approved.png",
+  "approved_strip_sha256": "c578daf869dcb88818b500a568e8ca87d816e398738e9e943d891dd848dbd99c"
+}

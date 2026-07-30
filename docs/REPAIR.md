@@ -33,9 +33,10 @@ Do not paste an unrelated one-off frame into a coherent generated row.
 
 ## `unused-cell-visible`
 
-Only standard rows have unused cells. Clear the named cell to full alpha zero
-through the deterministic hatch assembler, not by hiding it with a background
-color.
+Only standard rows have unused cells. Row 0 / col 6 is the one optional
+neutral/default pose and may be visible or transparent; it must not trigger
+this finding. Clear any other named reserved cell to full alpha zero through
+the deterministic hatch assembler, not by hiding it with a background color.
 
 ## `cell-edge-contact`
 

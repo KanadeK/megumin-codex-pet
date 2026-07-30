@@ -7,11 +7,11 @@ Passing unit tests alone is not a release. Every row below must have evidence.
 | Source quality | `ruff check .` | exit 0 |
 | Types | `mypy src` | exit 0 |
 | Tests | `pytest --cov=megumin_pet --cov-report=term-missing` | exit 0 and coverage threshold met |
-| Wheel/sdist | `python -m build` | both artifacts created |
+| Wheel/sdist | `python -m build --no-isolation` | both artifacts created |
 | Manifest/atlas | `petdiff validate pet` | `validation.ok` is `true`; no strict warnings |
 | Locked regression | `petdiff check-lock pet pet/pet.lock.json --policy examples/release-policy.json` | report `ok` is `true` |
-| Codex hatch contract | bundled `validate_atlas.py --require-v2` | exact 1536×2288, 73 used, 15 transparent reserved |
-| Visual quality | hatch run QA artifacts and three isolated blind reviews | identity, animation, and direction reviews all pass |
+| Codex hatch contract | bundled `validate_atlas.py --require-v2` | exact 1536×2288, 73 required poses, optional neutral at row 0 / col 6, 14 transparent reserved cells |
+| Visual quality | hatch run QA artifacts, three isolated blind direction classifiers, and one isolated final visual review | identity, animation, direction, and package reviews all pass |
 | Package safety | `petdiff verify-package dist/megumin.codex-pet` | checksums, paths, sizes, contents pass |
 | Reproducibility | two builds separated by at least two seconds | byte-identical SHA-256 |
 | Install smoke | install → doctor → recoverable uninstall in a temporary CODEX_HOME | all exit 0; trash copy exists |
@@ -25,7 +25,7 @@ Passing unit tests alone is not a release. Every row below must have evidence.
 ## One-command local gate
 
 ```bash
-python scripts/release_check.py --strict --json
+python scripts/release_check.py --strict --json --json-out build/release-check.json
 ```
 
 The command runs source gates, builds artifacts, validates the pet, checks the

@@ -73,6 +73,8 @@ def cell_key(row: int, column: int) -> str:
 
 def cell_label(row: int, column: int) -> str:
     """Return the semantic label for an atlas cell."""
+    if (row, column) == (0, 6):
+        return "neutral"
     if row <= 8:
         state = STATE_LAYOUT[row]
         return f"{state['name']}:{column}"
@@ -91,6 +93,18 @@ def active_cells() -> tuple[tuple[int, int], ...]:
 
 ACTIVE_CELLS = active_cells()
 ACTIVE_CELL_KEYS = frozenset(cell_key(row, column) for row, column in ACTIVE_CELLS)
+
+# Codex's v2 hatch pipeline may populate row 0, column 6 with a neutral/default
+# pose used by pointer dead-zone handling. It is valid when present and valid
+# when transparent, so it is not one of the 73 required regression cells.
+OPTIONAL_CELLS: tuple[tuple[int, int], ...] = ((0, 6),)
+OPTIONAL_CELL_KEYS = frozenset(cell_key(row, column) for row, column in OPTIONAL_CELLS)
+RESERVED_CELL_KEYS = frozenset(
+    cell_key(row, column)
+    for row in range(ROWS)
+    for column in range(COLUMNS)
+    if cell_key(row, column) not in ACTIVE_CELL_KEYS | OPTIONAL_CELL_KEYS
+)
 
 
 def finding(

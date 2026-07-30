@@ -1,22 +1,35 @@
 # Megumin Codex Pet + PetDiff
 
+[![CI](https://github.com/KanadeK/megumin-codex-pet/actions/workflows/ci.yml/badge.svg)](https://github.com/KanadeK/megumin-codex-pet/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/KanadeK/megumin-codex-pet)](https://github.com/KanadeK/megumin-codex-pet/releases/latest)
+[![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB)](https://www.python.org/)
+[![License: MIT code](https://img.shields.io/badge/code-MIT-green.svg)](LICENSE)
+
 An unofficial, original-art Codex v2 desktop pet inspired by **Megumin**, plus
 **PetDiff**: a real command-line regression reviewer for Codex pet atlases.
+
+<p align="center">
+  <img src="artwork/qa/previews/waving.gif" alt="Megumin waving animation" width="192">
+  <img src="artwork/qa/previews/running-right.gif" alt="Megumin running animation" width="192">
+</p>
 
 PetDiff turns an 8×11 atlas into deterministic per-cell evidence, compares an
 upgrade against explicit budgets, emits JSON and a self-contained HTML report,
 builds byte-reproducible packages, and performs recoverable installs. It is not
 a gallery or installer-only shell.
 
-> Status: source tooling is under active release preparation. A release is not
-> complete until the original atlas passes deterministic checks, three blind
-> visual reviews, CI, a downloaded-asset hash audit, and the tag/release gate.
+Version 0.1.0 ships the complete original 8×11 atlas, a three-reviewer blind
+direction challenge, isolated visual review, deterministic lock, source tests,
+byte-reproducible packaging, and recoverable lifecycle operations.
+
+[See all 11 animation rows and 16 look directions.](artwork/qa/contact-sheet.png)
+[Download the latest `.codex-pet` package.](https://github.com/KanadeK/megumin-codex-pet/releases/latest)
 
 ## What is actually runnable
 
 - Strict Codex v2 contract validation: `1536×2288`, 8×11 cells, 73 required
-  poses, 15 transparent reserved cells, safe manifest paths, and cell-edge
-  clipping detection.
+  poses, one optional neutral pose, 14 transparent reserved cells, safe
+  manifest paths, and cell-edge clipping detection.
 - `pet.lock.json` snapshots with SHA-256, alpha area, bounding box, weighted
   centroid, 16×16 silhouette/RGBA fingerprints, and loop-motion metrics.
 - Policy-based regressions for every active cell and every animation loop.
@@ -28,6 +41,8 @@ a gallery or installer-only shell.
 - Windows and Linux CI, a reusable composite GitHub Action, unit/integration
   tests, and a release gate that rebuilds packages twice with a deliberate
   time gap.
+- Committed visual evidence: contact sheet, GIFs, cardinal provenance,
+  three-reviewer blind direction verdict, chroma audit, and strict v2 report.
 
 ## Quick start
 
@@ -73,7 +88,7 @@ Replacing an existing pet retains the previous version under `.backups`.
 The release-equivalent local gate is:
 
 ```bash
-python scripts/release_check.py --strict --json
+python scripts/release_check.py --strict --json --json-out build/release-check.json
 ```
 
 It must report `ok: true`. The individual CI commands are:
@@ -82,12 +97,17 @@ It must report `ok: true`. The individual CI commands are:
 ruff check .
 mypy src
 pytest --cov=megumin_pet --cov-report=term-missing
-python -m build
+python -m build --no-isolation
 petdiff check-lock pet pet/pet.lock.json \
   --policy examples/release-policy.json \
   --json-out build/petdiff-release.json \
   --html-out build/petdiff-release.html
 ```
+
+The v0.1.0 release gate passed 52 tests at 91.85% coverage. The atlas SHA-256
+is `529125d140845a1e45866284e272a2b5d620e1d1b17816816ed1f306221984ec`;
+the reproducible `.codex-pet` SHA-256 is
+`c781c0450d27e917fc92c91060d8ad8828bf0f7df7d305762e908f17e9285d13`.
 
 See [docs/ACCEPTANCE.md](docs/ACCEPTANCE.md) for expected evidence and
 [docs/REPAIR.md](docs/REPAIR.md) for failure-specific recovery commands.

@@ -19,8 +19,27 @@ def test_valid_pet_produces_complete_deterministic_snapshot(tmp_path: Path) -> N
     assert first["validation"]["error_count"] == 0
     assert len(first["cells"]) == 88
     assert sum(cell["required"] for cell in first["cells"].values()) == len(ACTIVE_CELL_KEYS)
+    assert sum(cell["optional"] for cell in first["cells"].values()) == 1
+    assert first["contract"]["optional_cells"] == 1
+    assert first["contract"]["reserved_cells"] == 14
     assert first["atlas"]["size"] == [1536, 2288]
     assert first["motion"]["look-clockwise"]["frames"] == 16
+
+
+def test_visible_optional_neutral_cell_is_valid_and_edge_checked(tmp_path: Path) -> None:
+    visible = inspect_pet(make_pet(tmp_path / "visible", changes={(0, 6): "recolor"}))
+    assert visible["validation"]["ok"]
+    assert visible["cells"]["r00c06"]["label"] == "neutral"
+    assert visible["cells"]["r00c06"]["optional"]
+    assert not visible["cells"]["r00c06"]["required"]
+
+    clipped = inspect_pet(make_pet(tmp_path / "clipped", changes={(0, 6): "edge"}))
+    finding = next(
+        item
+        for item in clipped["validation"]["findings"]
+        if item["code"] == "cell-edge-contact"
+    )
+    assert finding["cell"] == "r00c06"
 
 
 def test_blank_required_and_visible_unused_cells_fail(tmp_path: Path) -> None:

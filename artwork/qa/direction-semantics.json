@@ -1,0 +1,32 @@
+{
+  "ok": true,
+  "reviewed_at_normal_size": true,
+  "ordered_loop": "000 -> 022.5 -> 045 -> 067.5 -> 090 -> 112.5 -> 135 -> 157.5 -> 180 -> 202.5 -> 225 -> 247.5 -> 270 -> 292.5 -> 315 -> 337.5 -> 000",
+  "directions": [
+    {"degree": "000", "verdict": "pass", "expected": "up", "observed": "eyes and chin point up", "horizontal": "neutral", "vertical": "up", "reason": "unmistakable up cardinal at normal size"},
+    {"degree": "022.5", "verdict": "pass", "expected": "up-right", "observed": "upward gaze begins moving screen-right", "horizontal": "screen-right", "vertical": "up", "reason": "continuous first clockwise step"},
+    {"degree": "045", "verdict": "pass", "expected": "up-right", "observed": "eyes and head read up-right", "horizontal": "screen-right", "vertical": "up", "reason": "both requested axes are visible"},
+    {"degree": "067.5", "verdict": "pass", "expected": "up-right", "observed": "mostly right with a remaining upward cue", "horizontal": "screen-right", "vertical": "up", "reason": "natural interpolation toward 090"},
+    {"degree": "090", "verdict": "pass", "expected": "right", "observed": "profile, nose, and eyes point screen-right", "horizontal": "screen-right", "vertical": "neutral", "reason": "unmistakable right cardinal at normal size"},
+    {"degree": "112.5", "verdict": "pass", "expected": "down-right", "observed": "right profile begins lowering", "horizontal": "screen-right", "vertical": "down", "reason": "continuous step away from 090"},
+    {"degree": "135", "verdict": "pass", "expected": "down-right", "observed": "right-facing head and lowered gaze", "horizontal": "screen-right", "vertical": "down", "reason": "both requested axes are visible"},
+    {"degree": "157.5", "verdict": "pass", "expected": "down-right", "observed": "near-down pose retains a right cue", "horizontal": "screen-right", "vertical": "down", "reason": "natural interpolation toward 180"},
+    {"degree": "180", "verdict": "pass", "expected": "down", "observed": "eyes and chin point down", "horizontal": "neutral", "vertical": "down", "reason": "unmistakable down cardinal at normal size"},
+    {"degree": "202.5", "verdict": "pass", "expected": "down-left", "observed": "downward gaze begins moving screen-left", "horizontal": "screen-left", "vertical": "down", "reason": "continuous step away from 180"},
+    {"degree": "225", "verdict": "pass", "expected": "down-left", "observed": "left-facing head and lowered gaze", "horizontal": "screen-left", "vertical": "down", "reason": "both requested axes are visible"},
+    {"degree": "247.5", "verdict": "pass", "expected": "down-left", "observed": "mostly left with a remaining downward cue", "horizontal": "screen-left", "vertical": "down", "reason": "natural interpolation toward 270"},
+    {"degree": "270", "verdict": "pass", "expected": "left", "observed": "profile, nose, and eyes point screen-left", "horizontal": "screen-left", "vertical": "neutral", "reason": "unmistakable left cardinal at normal size"},
+    {"degree": "292.5", "verdict": "pass", "expected": "up-left", "observed": "left profile begins lifting", "horizontal": "screen-left", "vertical": "up", "reason": "continuous step away from 270"},
+    {"degree": "315", "verdict": "pass", "expected": "up-left", "observed": "left-facing head and raised gaze", "horizontal": "screen-left", "vertical": "up", "reason": "both requested axes are visible"},
+    {"degree": "337.5", "verdict": "pass", "expected": "up-left", "observed": "near-up pose retains a left cue", "horizontal": "screen-left", "vertical": "up", "reason": "natural interpolation back to 000"}
+  ],
+  "continuity_review": {
+    "verdict": "pass",
+    "metric_warnings": [
+      "000->022.5 has a larger local pixel diff",
+      "157.5->180 has a larger local pixel diff and 8px center shift",
+      "the alpha-hole heuristic flags natural gaps between legs, cloak, and the attached staff"
+    ],
+    "visual_resolution": "At normal size the loop remains monotonic and cohesive. The 157.5->180 change is the expected transition from a down-right profile to a frontal down pose; no snap, scale pop, broken attachment, interior seam, or transparent character hole is visible."
+  }
+}

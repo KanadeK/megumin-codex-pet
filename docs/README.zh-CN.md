@@ -4,8 +4,9 @@
 **PetDiff** 图集回归审查工具。它不是只展示图片的页面，也不是只复制文件的安装壳。
 
 PetDiff 会检查 8×11、1536×2288 的 v2 图集合同，对 73 个必用格逐格提取透明面积、
-包围盒、质心、轮廓与颜色指纹，并比较每个动画循环的运动节奏。结果可输出稳定 JSON
-和单文件 HTML，适合 PR 审查与 CI 留证。
+包围盒、质心、轮廓与颜色指纹；同时允许 row 0 / col 6 的可选 neutral 姿态，并要求
+其余 14 个保留格透明。它还会比较每个动画循环的运动节奏。结果可输出稳定 JSON 和
+单文件 HTML，适合 PR 审查与 CI 留证。
 
 ## 最短验收路径
 
@@ -17,7 +18,7 @@ py -3.11 -m venv .venv
   --policy examples\release-policy.json `
   --json-out build\petdiff-release.json `
   --html-out build\petdiff-release.html
-.\.venv\Scripts\python.exe scripts\release_check.py --strict --json
+.\.venv\Scripts\python.exe scripts\release_check.py --strict --json --json-out build\release-check.json
 ```
 
 最后一个命令必须返回 0 且输出 `"ok": true`。若失败，不要跳过门禁；按

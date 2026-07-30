@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "character": "Megumin / KonoSuba",
+  "projectStatus": "unofficial fan project",
+  "generation": {
+    "channel": "Codex built-in ImageGen",
+    "officialImagesUsed": false,
+    "basePrompt": "artwork/hatch-run/prompts/base-pet.md",
+    "canonicalBaseSha256": "0bdfcefe9d0b5bc8fc64f286ff2f54e24a5c7019b104c6cebc8345f64266df9e",
+    "policy": "Every visible pose was generated from the text-only identity brief and generated project references. No official illustration, screenshot, manga panel, logo, dialogue, audio, or animation frame was attached or embedded."
+  },
+  "generatedRowSources": {
+    "idle.png": "2f1d6fab5f6d97072ec7339a044ad3e831c4bd89be71cc6aa5664daa56e441a7",
+    "running-right.png": "6f7f328f56d4499f233d791f27310a1db42e6007c2b8878238e3b153fa8ddaac",
+    "running-left.png": "9e1e389573f69069067a829dcec1a8ba697b8d982cf8e7e0ba68a5a23de7f4ab",
+    "waving.png": "3597a2b03213a09f158a6e82b133e251e89a13c20992cf090d6be2167711a2fe",
+    "jumping.png": "46f401eeef26c724d1553e5884c143b5a62c49a80422bc620ddee35e491c319e",
+    "failed.png": "2e3a0873f3570900e99fad282f960b68817c3c0420c3ce19b4d605d6b3e295cf",
+    "waiting.png": "f6d370611e1862fec2f4c854cbab136c9ae9d2c4144f6fc7e0d2774cd4aaa5ba",
+    "running.png": "644d2211478992c8eaab9a9f5f0bf58d69f124e155849987e63de7e35e2cbd69",
+    "review.png": "04a0d134ebbbe399aac8ce1a434094ccd67a14f71d2d355964297221f04b4a98",
+    "look-cardinals.png": "37a12b3120d32a6284203718dd799f161f9fbdf04e625f7f3a00836c8969a055",
+    "look-row-9.png": "6d21e48b636d00760d70d7bd4e0687fe5da2b13673b60c7c2219f6bda197bb77",
+    "look-row-10.png": "90cd2f17828cfe5ecb7d8d768a1f8162b56ed8ebcc424dce4110b7b813bb7ad1"
+  },
+  "deterministicAssembly": {
+    "contract": "Codex pet spriteVersionNumber 2, 8 columns x 11 rows, 192 x 208 cells",
+    "cardinalSemanticRemap": {
+      "reason": "The generator returned unambiguous screen-left and screen-right profiles in character-relative slot order.",
+      "raw090AssignedTo": "270",
+      "raw270AssignedTo": "090",
+      "evidence": "artwork/qa/cardinal-anchors.json"
+    },
+    "chromaKey": "#00FF00",
+    "despillPasses": 1,
+    "atlasSha256": "529125d140845a1e45866284e272a2b5d620e1d1b17816816ed1f306221984ec"
+  },
+  "qa": {
+    "standardRows": "artwork/qa/standard-rows-review.json",
+    "atlasValidation": "artwork/qa/validation.json",
+    "directionSemantics": "artwork/qa/direction-semantics.json",
+    "blindDirectionValidation": "artwork/qa/direction-blind-validation.json",
+    "continuity": "artwork/qa/look-continuity.json",
+    "finalVisualReview": "artwork/qa/final-visual-qa.md"
+  }
+}

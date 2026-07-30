@@ -83,7 +83,7 @@ def gate(strict: bool) -> dict[str, Any]:
                 "--cov-report=term-missing",
             ],
         ),
-        _run("build", [python, "-m", "build"]),
+        _run("build", [python, "-m", "build", "--no-isolation"]),
     ]
     pet_validation = _json_output(
         [python, "-m", "megumin_pet", "validate", "pet", "--json-out", "build/validation.json"]
@@ -217,10 +217,16 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--strict", action="store_true")
     parser.add_argument("--json", action="store_true", dest="as_json")
+    parser.add_argument("--json-out", type=Path)
     args = parser.parse_args(argv)
     report = gate(args.strict)
+    rendered = json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True)
+    if args.json_out is not None:
+        output_path = args.json_out if args.json_out.is_absolute() else ROOT / args.json_out
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(rendered + "\n", encoding="utf-8")
     if args.as_json:
-        print(json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True))
+        print(rendered)
     else:
         print("PASS" if report["ok"] else "FAIL")
         for check in report["checks"]:

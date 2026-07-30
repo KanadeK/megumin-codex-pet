@@ -8,6 +8,8 @@ from megumin_pet.contract import (
     ACTIVE_CELLS,
     ATLAS_HEIGHT,
     ATLAS_WIDTH,
+    OPTIONAL_CELLS,
+    RESERVED_CELL_KEYS,
     cell_key,
     cell_label,
     resolve_inside,
@@ -30,8 +32,11 @@ def test_contract_dimensions_and_active_cell_count() -> None:
     assert (ATLAS_WIDTH, ATLAS_HEIGHT) == (1536, 2288)
     assert len(ACTIVE_CELLS) == 73
     assert len(set(ACTIVE_CELLS)) == 73
+    assert OPTIONAL_CELLS == ((0, 6),)
+    assert len(RESERVED_CELL_KEYS) == 14
     assert cell_key(10, 7) == "r10c07"
     assert cell_label(0, 0) == "idle:0"
+    assert cell_label(0, 6) == "neutral"
     assert cell_label(10, 7) == "look:337.5"
 
 
