@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import platform
 import subprocess
 import sys
@@ -15,6 +16,12 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def _child_environment() -> dict[str, str]:
+    environment = os.environ.copy()
+    environment["PYTHONIOENCODING"] = "utf-8"
+    return environment
 
 
 def _sha256(path: Path) -> str:
@@ -34,6 +41,7 @@ def _run(name: str, command: Sequence[str]) -> dict[str, Any]:
         encoding="utf-8",
         errors="replace",
         check=False,
+        env=_child_environment(),
     )
     return {
         "name": name,
@@ -54,6 +62,7 @@ def _json_output(command: Sequence[str]) -> dict[str, Any]:
         encoding="utf-8",
         errors="replace",
         check=False,
+        env=_child_environment(),
     )
     try:
         payload = json.loads(completed.stdout)
@@ -108,6 +117,17 @@ def gate(strict: bool) -> dict[str, Any]:
             "build/petdiff-release.json",
             "--html-out",
             "build/petdiff-release.html",
+        ]
+    )
+    preview_audit = _json_output(
+        [
+            python,
+            "-m",
+            "megumin_pet",
+            "audit-previews",
+            "artwork/qa/previews",
+            "--json-out",
+            "build/preview-audit.json",
         ]
     )
 
@@ -195,6 +215,7 @@ def gate(strict: bool) -> dict[str, Any]:
         all(check["ok"] for check in checks)
         and pet_validation["ok"]
         and lock_check["ok"]
+        and preview_audit["ok"]
         and reproducibility["ok"]
         and lifecycle["ok"]
     )
@@ -208,6 +229,7 @@ def gate(strict: bool) -> dict[str, Any]:
         "checks": checks,
         "pet_validation": pet_validation,
         "lock_check": lock_check,
+        "preview_audit": preview_audit,
         "reproducibility": reproducibility,
         "lifecycle": lifecycle,
     }

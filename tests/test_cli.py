@@ -61,6 +61,34 @@ def test_package_verify_install_doctor_and_uninstall_cli(tmp_path: Path, capsys:
     assert _read_stdout(capsys)["ok"] is True
 
 
+def test_render_and_audit_previews_cli(tmp_path: Path, capsys: object) -> None:
+    pet = make_pet(tmp_path / "pet")
+    previews = tmp_path / "previews"
+    sheet = tmp_path / "background-check.png"
+    report = tmp_path / "preview-audit.json"
+    assert (
+        main(
+            [
+                "render-previews",
+                str(pet),
+                "--out-dir",
+                str(previews),
+                "--qa-sheet",
+                str(sheet),
+                "--json-out",
+                str(report),
+            ]
+        )
+        == 0
+    )
+    assert _read_stdout(capsys)["ok"] is True
+    assert report.is_file()
+    assert sheet.is_file()
+
+    assert main(["audit-previews", str(previews), "--chroma-key", "#00ff00"]) == 0
+    assert _read_stdout(capsys)["ok"] is True
+
+
 def test_cli_returns_structured_failure(tmp_path: Path, capsys: object) -> None:
     assert main(["verify-package", str(tmp_path / "missing")]) == 2
     result = _read_stdout(capsys)

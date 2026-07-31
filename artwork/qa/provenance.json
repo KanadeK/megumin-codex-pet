@@ -41,6 +41,8 @@
     "directionSemantics": "artwork/qa/direction-semantics.json",
     "blindDirectionValidation": "artwork/qa/direction-blind-validation.json",
     "continuity": "artwork/qa/look-continuity.json",
+    "previewAudit": "artwork/qa/preview-audit.json",
+    "previewBackgroundCheck": "artwork/qa/preview-background-check.png",
     "finalVisualReview": "artwork/qa/final-visual-qa.md"
   }
 }

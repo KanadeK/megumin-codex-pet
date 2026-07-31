@@ -58,6 +58,8 @@ jobs:
             --policy examples/release-policy.json \
             --json-out build/petdiff.json \
             --html-out build/petdiff.html
+          petdiff audit-previews artwork/qa/previews \
+            --json-out build/preview-audit.json
       - uses: actions/upload-artifact@v7
         if: steps.pet.outputs.available == 'true'
         with:

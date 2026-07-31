@@ -27,6 +27,15 @@ baseline + current + policy
           +--> stable JSON evidence
           +--> self-contained HTML review
           +--> process exit code
+
+final packaged atlas
+          |
+          v
+ transparent GIF renderer
+          |
+          +--> nine contract-timed previews
+          +--> chroma-boundary audit JSON
+          +--> light/dark visual QA sheet
 ```
 
 ## Modules
@@ -41,6 +50,9 @@ baseline + current + policy
   checksums, then independently verifies archive paths and limits.
 - `installer.py` stages and validates before an atomic directory replacement.
   Existing installs are moved to `.backups`; uninstall moves to `.trash`.
+- `previews.py` slices the validated final atlas, applies a deterministic
+  one-bit GIF alpha policy, audits visible boundaries near the chroma key, and
+  renders actual GIF frames on light and dark QA backgrounds.
 - `cli.py` maps all successful and failed operations to machine-readable JSON
   and stable exit codes.
 
@@ -73,6 +85,9 @@ included.
 - A lock is review evidence, not a signature. CI should obtain the baseline
   lock from the base branch so a PR cannot silently update both atlas and lock.
 - HTML escapes all user-controlled strings and embeds only escaped JSON.
+- Public previews are derived from the packaged atlas, never from pre-despill
+  hatch frames. Their dimensions, frames, durations, and chroma boundaries are
+  release-gated.
 
 ## Deliberate non-goals
 

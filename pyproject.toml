@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "megumin-petdiff"
-version = "0.1.0"
+version = "0.1.1"
 description = "Codex v2 pet atlas validator, regression reviewer, packager, and recoverable installer."
 readme = "README.md"
 requires-python = ">=3.11"

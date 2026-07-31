@@ -18,9 +18,9 @@ upgrade against explicit budgets, emits JSON and a self-contained HTML report,
 builds byte-reproducible packages, and performs recoverable installs. It is not
 a gallery or installer-only shell.
 
-Version 0.1.0 ships the complete original 8×11 atlas, a three-reviewer blind
-direction challenge, isolated visual review, deterministic lock, source tests,
-byte-reproducible packaging, and recoverable lifecycle operations.
+Version 0.1.1 corrects the public transparent GIFs, adds deterministic preview
+rendering and chroma-fringe enforcement, and keeps the already-clean packaged
+8×11 atlas byte-identical to v0.1.0.
 
 [See all 11 animation rows and 16 look directions.](artwork/qa/contact-sheet.png)
 [Download the latest `.codex-pet` package.](https://github.com/KanadeK/megumin-codex-pet/releases/latest)
@@ -34,6 +34,8 @@ byte-reproducible packaging, and recoverable lifecycle operations.
   centroid, 16×16 silhouette/RGBA fingerprints, and loop-motion metrics.
 - Policy-based regressions for every active cell and every animation loop.
 - Deterministic JSON and self-contained HTML review artifacts.
+- Deterministic transparent GIF previews rendered only from the final packaged
+  atlas, with frame/duration checks and a zero-tolerance chroma-fringe audit.
 - Byte-reproducible `.codex-pet` archives with internal checksums and zip-slip,
   duplicate-entry, encryption, and size defenses.
 - Transactional install with retained backups, an installed-pet doctor, and
@@ -59,6 +61,16 @@ Validate and lock an unpacked pet:
 ```bash
 petdiff validate pet --json-out build/validation.json
 petdiff snapshot pet --out pet/pet.lock.json
+```
+
+Render and audit the nine public animation previews:
+
+```bash
+petdiff render-previews pet \
+  --out-dir artwork/qa/previews \
+  --qa-sheet artwork/qa/preview-background-check.png \
+  --json-out artwork/qa/preview-audit.json
+petdiff audit-previews artwork/qa/previews
 ```
 
 Review an atlas upgrade:
@@ -102,12 +114,14 @@ petdiff check-lock pet pet/pet.lock.json \
   --policy examples/release-policy.json \
   --json-out build/petdiff-release.json \
   --html-out build/petdiff-release.html
+petdiff audit-previews artwork/qa/previews \
+  --json-out build/preview-audit.json
 ```
 
-The v0.1.0 release gate passed 52 tests at 91.85% coverage. The atlas SHA-256
+The v0.1.1 release gate passes 58 tests at 91.07% coverage. The atlas SHA-256
 is `529125d140845a1e45866284e272a2b5d620e1d1b17816816ed1f306221984ec`;
 the reproducible `.codex-pet` SHA-256 is
-`c781c0450d27e917fc92c91060d8ad8828bf0f7df7d305762e908f17e9285d13`.
+`934aa77aa2ed1fba010f60e9451acb9d4fda3e84ddbbdda0e6114cb298871d7d`.
 
 See [docs/ACCEPTANCE.md](docs/ACCEPTANCE.md) for expected evidence and
 [docs/REPAIR.md](docs/REPAIR.md) for failure-specific recovery commands.

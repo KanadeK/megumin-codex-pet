@@ -13,6 +13,13 @@ from .atlas import PetInspectionError, inspect_pet
 from .diffing import compare_snapshots, load_policy, load_snapshot, render_html
 from .installer import InstallError, doctor, install, uninstall
 from .packaging import PackageError, build_package, verify_package
+from .previews import (
+    PreviewError,
+    audit_previews,
+    parse_rgb,
+    render_previews,
+    write_preview_report,
+)
 
 
 def _write_json(document: dict[str, Any], path: Path | None = None) -> str:
@@ -33,7 +40,7 @@ def build_parser() -> argparse.ArgumentParser:
         prog="petdiff",
         description="Validate, compare, package, and recoverably install Codex v2 pets.",
     )
-    parser.add_argument("--version", action="version", version="petdiff 0.1.0")
+    parser.add_argument("--version", action="version", version="petdiff 0.1.1")
     commands = parser.add_subparsers(dest="command", required=True)
 
     validate = commands.add_parser("validate", help="validate an unpacked v2 pet")
@@ -65,6 +72,27 @@ def build_parser() -> argparse.ArgumentParser:
 
     verify = commands.add_parser("verify-package", help="verify package paths and checksums")
     verify.add_argument("archive", type=_path)
+
+    render = commands.add_parser(
+        "render-previews",
+        help="render transparent GIF previews from the final pet atlas",
+    )
+    render.add_argument("pet", type=_path)
+    render.add_argument("--out-dir", required=True, type=_path)
+    render.add_argument("--qa-sheet", type=_path)
+    render.add_argument("--alpha-threshold", type=int, default=128)
+    render.add_argument("--chroma-key", type=parse_rgb, default=(0, 255, 0))
+    render.add_argument("--chroma-distance", type=int, default=96)
+    render.add_argument("--json-out", type=_path)
+
+    audit = commands.add_parser(
+        "audit-previews",
+        help="audit all standard GIF previews for contract and chroma-fringe failures",
+    )
+    audit.add_argument("previews", type=_path)
+    audit.add_argument("--chroma-key", type=parse_rgb, default=(0, 255, 0))
+    audit.add_argument("--chroma-distance", type=int, default=96)
+    audit.add_argument("--json-out", type=_path)
 
     install_parser = commands.add_parser("install", help="transactionally install a pet")
     install_parser.add_argument("source", type=_path)
@@ -121,6 +149,27 @@ def run(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
         return build_package(args.pet, args.out), 0
     if args.command == "verify-package":
         return verify_package(args.archive), 0
+    if args.command == "render-previews":
+        result = render_previews(
+            args.pet,
+            args.out_dir,
+            qa_sheet=args.qa_sheet,
+            alpha_threshold=args.alpha_threshold,
+            chroma_key=args.chroma_key,
+            chroma_distance=args.chroma_distance,
+        )
+        if args.json_out is not None:
+            write_preview_report(result, args.json_out)
+        return result, 0 if result["ok"] else 1
+    if args.command == "audit-previews":
+        result = audit_previews(
+            args.previews,
+            chroma_key=args.chroma_key,
+            chroma_distance=args.chroma_distance,
+        )
+        if args.json_out is not None:
+            write_preview_report(result, args.json_out)
+        return result, 0 if result["ok"] else 1
     if args.command == "install":
         return install(args.source, args.codex_home), 0
     if args.command == "doctor":
@@ -141,6 +190,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         InstallError,
         PackageError,
         PetInspectionError,
+        PreviewError,
         OSError,
         ValueError,
         json.JSONDecodeError,

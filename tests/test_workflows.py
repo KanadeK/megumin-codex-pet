@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+import sys
 from pathlib import Path
 
 import pytest
 import yaml
+
+from scripts.release_check import _json_output
 
 ROOT = Path(__file__).resolve().parents[1]
 YAML_FILES = (
@@ -48,3 +51,19 @@ def test_release_workflow_runs_strict_gate_before_publishing() -> None:
     assert "scripts/release_check.py --strict --json" in commands
     release_steps = [step for step in steps if step.get("uses") == "softprops/action-gh-release@v3"]
     assert len(release_steps) == 1
+
+
+def test_release_gate_preserves_unicode_subprocess_json() -> None:
+    result = _json_output(
+        [
+            sys.executable,
+            "-c",
+            (
+                "import json; "
+                "print(json.dumps({'path': 'D:/我的/惠惠'}, ensure_ascii=False))"
+            ),
+        ]
+    )
+
+    assert result["ok"] is True
+    assert result["payload"]["path"] == "D:/我的/惠惠"

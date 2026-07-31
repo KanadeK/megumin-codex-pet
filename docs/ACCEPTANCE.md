@@ -10,8 +10,9 @@ Passing unit tests alone is not a release. Every row below must have evidence.
 | Wheel/sdist | `python -m build --no-isolation` | both artifacts created |
 | Manifest/atlas | `petdiff validate pet` | `validation.ok` is `true`; no strict warnings |
 | Locked regression | `petdiff check-lock pet pet/pet.lock.json --policy examples/release-policy.json` | report `ok` is `true` |
+| Public GIF previews | `petdiff audit-previews artwork/qa/previews --json-out build/preview-audit.json` | all 9 files match dimensions, frames, and durations; every `chroma_boundary_pixels` is `0` |
 | Codex hatch contract | bundled `validate_atlas.py --require-v2` | exact 1536×2288, 73 required poses, optional neutral at row 0 / col 6, 14 transparent reserved cells |
-| Visual quality | hatch run QA artifacts, three isolated blind direction classifiers, and one isolated final visual review | identity, animation, direction, and package reviews all pass |
+| Visual quality | hatch run QA artifacts, three isolated blind direction classifiers, light/dark preview sheet, and one isolated final visual review | identity, animation, direction, transparency, and package reviews all pass |
 | Package safety | `petdiff verify-package dist/megumin.codex-pet` | checksums, paths, sizes, contents pass |
 | Reproducibility | two builds separated by at least two seconds | byte-identical SHA-256 |
 | Install smoke | install → doctor → recoverable uninstall in a temporary CODEX_HOME | all exit 0; trash copy exists |
@@ -29,9 +30,9 @@ python scripts/release_check.py --strict --json --json-out build/release-check.j
 ```
 
 The command runs source gates, builds artifacts, validates the pet, checks the
-lock, creates two time-separated packages, compares their bytes, verifies the
-archive, and exercises install/doctor/uninstall against a temporary Codex home.
-It writes no user Codex configuration.
+lock, audits the nine public GIFs, creates two time-separated packages, compares
+their bytes, verifies the archive, and exercises install/doctor/uninstall
+against a temporary Codex home. It writes no user Codex configuration.
 
 ## Exit-code contract
 

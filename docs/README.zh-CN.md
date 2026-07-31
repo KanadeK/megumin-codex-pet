@@ -8,12 +8,20 @@ PetDiff 会检查 8×11、1536×2288 的 v2 图集合同，对 73 个必用格�
 其余 14 个保留格透明。它还会比较每个动画循环的运动节奏。结果可输出稳定 JSON 和
 单文件 HTML，适合 PR 审查与 CI 留证。
 
+v0.1.1 还会直接从最终 `pet/spritesheet.webp` 生成 9 个透明 GIF，检查尺寸、
+帧数、时长和边界色。任何接近 `#00FF00` 的可见绿边都会使发布门禁失败。
+
 ## 最短验收路径
 
 ```powershell
 py -3.11 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -e ".[dev]"
 .\.venv\Scripts\petdiff.exe validate pet
+.\.venv\Scripts\petdiff.exe render-previews pet `
+  --out-dir artwork\qa\previews `
+  --qa-sheet artwork\qa\preview-background-check.png `
+  --json-out artwork\qa\preview-audit.json
+.\.venv\Scripts\petdiff.exe audit-previews artwork\qa\previews
 .\.venv\Scripts\petdiff.exe check-lock pet pet\pet.lock.json `
   --policy examples\release-policy.json `
   --json-out build\petdiff-release.json `
@@ -23,6 +31,9 @@ py -3.11 -m venv .venv
 
 最后一个命令必须返回 0 且输出 `"ok": true`。若失败，不要跳过门禁；按
 [REPAIR.md](REPAIR.md) 中对应错误码修复。
+
+预览必须从最终宠物图集生成，禁止再使用
+`artwork\hatch-run\frames` 下尚未完成去绿处理的中间帧。
 
 ## 安装、诊断与恢复
 

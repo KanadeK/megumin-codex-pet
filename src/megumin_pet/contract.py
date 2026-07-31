@@ -6,7 +6,7 @@ import re
 from pathlib import Path, PurePosixPath
 from typing import Any
 
-TOOL_VERSION = "0.1.0"
+TOOL_VERSION = "0.1.1"
 SNAPSHOT_SCHEMA = 1
 REPORT_SCHEMA = 1
 PACKAGE_SCHEMA = 1

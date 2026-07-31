@@ -71,6 +71,33 @@ This warning means fewer than eight distinct downsampled RGBA poses exist among
 the 16 look directions. Inspect direction semantics and regenerate complete row
 9 or row 10. Never silence it before the blind direction review.
 
+## `preview-chroma-fringe`
+
+The public GIF contains chroma-key-colored pixels on a visible transparency
+boundary. Do not rebuild it from `artwork/hatch-run/frames` or another
+pre-despill intermediate. Regenerate every preview from the exact packaged
+atlas:
+
+```bash
+petdiff render-previews pet \
+  --out-dir artwork/qa/previews \
+  --qa-sheet artwork/qa/preview-background-check.png \
+  --json-out artwork/qa/preview-audit.json
+petdiff audit-previews artwork/qa/previews
+```
+
+The audit must report `chroma_boundary_pixels: 0` for all nine states. Inspect
+`preview-background-check.png` at original size on both backgrounds before
+accepting the repair; the numeric gate supplements visual QA rather than
+replacing it.
+
+## `preview-missing`, `preview-dimensions`, `preview-frame-count`, or `preview-duration`
+
+Do not hand-edit the affected GIF or change its timing to make the audit pass.
+Run `petdiff render-previews` from the validated final pet. The renderer obtains
+all frame counts and durations from the same executable `STATE_LAYOUT` contract
+used by atlas validation.
+
 ## Package errors
 
 - `unsafe archive entry`: discard the package; rebuild with `petdiff package`.

@@ -1,0 +1,273 @@
+{
+  "background_check": {
+    "path": "artwork/qa/preview-background-check.png",
+    "sha256": "4e5c90d2c5dfcd4be84c71255f178fab3e6d231bf6ed42dd3d88a4aead96cea7",
+    "size": [
+      1212,
+      726
+    ]
+  },
+  "chroma_distance": 96,
+  "chroma_key": [
+    0,
+    255,
+    0
+  ],
+  "directory": "artwork/qa/previews",
+  "error_count": 0,
+  "findings": [],
+  "ok": true,
+  "previews": {
+    "failed": {
+      "chroma_boundary_pixels": 0,
+      "chroma_boundary_pixels_by_frame": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "durations_ms": [
+        140,
+        140,
+        140,
+        140,
+        140,
+        140,
+        140,
+        240
+      ],
+      "frames": 8,
+      "path": "artwork/qa/previews/failed.gif",
+      "sha256": "ef4c8f9ff333ebc02957aa99150352c2817f821cc4b3c4b9f75a625bc3470109",
+      "size": [
+        192,
+        208
+      ]
+    },
+    "idle": {
+      "chroma_boundary_pixels": 0,
+      "chroma_boundary_pixels_by_frame": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "durations_ms": [
+        280,
+        110,
+        110,
+        140,
+        140,
+        320
+      ],
+      "frames": 6,
+      "path": "artwork/qa/previews/idle.gif",
+      "sha256": "d79584392792c3dfb197a21529749f7d753ca7dc4f2add919589e851c5313ef0",
+      "size": [
+        192,
+        208
+      ]
+    },
+    "jumping": {
+      "chroma_boundary_pixels": 0,
+      "chroma_boundary_pixels_by_frame": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "durations_ms": [
+        140,
+        140,
+        140,
+        140,
+        280
+      ],
+      "frames": 5,
+      "path": "artwork/qa/previews/jumping.gif",
+      "sha256": "9b61bc102a23807610da4c2bb34c5e382e82ed02079c334ea926051424ddc204",
+      "size": [
+        192,
+        208
+      ]
+    },
+    "review": {
+      "chroma_boundary_pixels": 0,
+      "chroma_boundary_pixels_by_frame": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "durations_ms": [
+        150,
+        150,
+        150,
+        150,
+        150,
+        280
+      ],
+      "frames": 6,
+      "path": "artwork/qa/previews/review.gif",
+      "sha256": "44cca578f19d0cfe686a04ea3a6218992568c69438b23e47ebd38fd8141b8d1c",
+      "size": [
+        192,
+        208
+      ]
+    },
+    "running": {
+      "chroma_boundary_pixels": 0,
+      "chroma_boundary_pixels_by_frame": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "durations_ms": [
+        120,
+        120,
+        120,
+        120,
+        120,
+        220
+      ],
+      "frames": 6,
+      "path": "artwork/qa/previews/running.gif",
+      "sha256": "f4917d83fa68f7b93e39be9fce5cac1bb38f163ffcb37014f901b664488c9410",
+      "size": [
+        192,
+        208
+      ]
+    },
+    "running-left": {
+      "chroma_boundary_pixels": 0,
+      "chroma_boundary_pixels_by_frame": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "durations_ms": [
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        220
+      ],
+      "frames": 8,
+      "path": "artwork/qa/previews/running-left.gif",
+      "sha256": "60e5b57d7504b9ef9ddd5271f511f949c8c99fb2d73b5d0f3c2e416d7cad4dde",
+      "size": [
+        192,
+        208
+      ]
+    },
+    "running-right": {
+      "chroma_boundary_pixels": 0,
+      "chroma_boundary_pixels_by_frame": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "durations_ms": [
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        220
+      ],
+      "frames": 8,
+      "path": "artwork/qa/previews/running-right.gif",
+      "sha256": "2f223725bdafde02861e2f0f15608f9b66164b324592f83421594f84962621f1",
+      "size": [
+        192,
+        208
+      ]
+    },
+    "waiting": {
+      "chroma_boundary_pixels": 0,
+      "chroma_boundary_pixels_by_frame": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "durations_ms": [
+        150,
+        150,
+        150,
+        150,
+        150,
+        260
+      ],
+      "frames": 6,
+      "path": "artwork/qa/previews/waiting.gif",
+      "sha256": "1f3ef9c622d1f5828a924f32ab17274c104f854baaee30a398b1b64aa3077867",
+      "size": [
+        192,
+        208
+      ]
+    },
+    "waving": {
+      "chroma_boundary_pixels": 0,
+      "chroma_boundary_pixels_by_frame": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "durations_ms": [
+        140,
+        140,
+        140,
+        280
+      ],
+      "frames": 4,
+      "path": "artwork/qa/previews/waving.gif",
+      "sha256": "39d0995a7f7d601da02361435f307611101761f8103f029ed285d665fb57cc99",
+      "size": [
+        192,
+        208
+      ]
+    }
+  },
+  "schema": 1,
+  "source": {
+    "alpha_threshold": 128,
+    "atlas": "pet/spritesheet.webp",
+    "atlas_sha256": "529125d140845a1e45866284e272a2b5d620e1d1b17816816ed1f306221984ec",
+    "pet": "pet"
+  },
+  "tool": {
+    "name": "petdiff",
+    "version": "0.1.1"
+  }
+}
